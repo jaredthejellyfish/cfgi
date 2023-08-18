@@ -41,7 +41,7 @@ task(
  * @param {string} [configName] - The name for the new configuration. If not provided, the user will be prompted for input.
  * @returns {Promise<string>} The name of the generated configuration file.
  */
-export default async function generateNewConfig(
+export async function generateNewConfig(
   configName: string,
   includeSample: boolean = false,
   includeOptions: boolean = false

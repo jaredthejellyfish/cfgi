@@ -86,10 +86,12 @@ export function command(cmd: string, silent = true): RunOutput {
 
 /**
  * Represents a run within a task.
+ * A run must always have a return statement within its function body.
+ * If it does not have one it will be added automatically.
  *
  * @param {string} name - The name of the run.
  * @param {() => void | RunOutput} runFunction - The function that defines the run's behavior.
- * @returns {runsReturnType} An object representing the run.
+ * @returns {RunsReturn} An object representing the run.
  */
 export function runs(
   name: string,
@@ -150,7 +152,7 @@ export function task(
   setup: () => void,
   runs: RunsReturn[],
   config?: TaskConfig
-) {
+): { passed: number; errors: number } {
   if (setup) setup();
 
   const startTime = new Date().getTime();
@@ -305,14 +307,6 @@ function cleanup(
         `ℹ Completed task ${pink(taskName)} in ${totalTime! / 1000}s`
       )
     );
-    console.log("");
-    console.log(
-      chalk.bold(`${chalk.red("♥")} Thank you for using ${pink("cfgi")} :)`)
-    );
-    console.log("");
-    console.log(pink("⏽ Author: @jaredthejellyfish"));
-    console.log(pink("⏽ Github: https://github.com/jaredthejellyfish/cfgi"));
-    console.log("");
     return;
   } else {
     console.log("");
@@ -324,3 +318,12 @@ function cleanup(
     console.log("");
   }
 }
+
+// console.log("");
+// console.log(
+//   chalk.bold(`${chalk.red("♥")} Thank you for using ${pink("cfgi")} :)`)
+// );
+// console.log("");
+// console.log(pink("⏽ Author: @jaredthejellyfish"));
+// console.log(pink("⏽ Github: https://github.com/jaredthejellyfish/cfgi"));
+// console.log("");
