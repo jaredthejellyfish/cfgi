@@ -11,8 +11,17 @@ import { createContext, Script } from "vm";
 
 const generate = pkg.default;
 
+/**
+ * Returns the current working directory.
+ * @type {string}
+ */
 export const currentDirectory = process.cwd();
 
+/**
+ * Finds all the configuration files in a directory.
+ * @param {string} dir - The directory to search in.
+ * @returns {Promise<string>} - The name of the selected configuration file.
+ */
 export async function findConfigFilesInDir(dir?: string): Promise<string> {
   const configPath = dir || currentDirectory;
 
@@ -34,6 +43,11 @@ export async function findConfigFilesInDir(dir?: string): Promise<string> {
   return response.config;
 }
 
+/**
+ * Validates the provided configuration name.
+ * @param {string} name - The name of the configuration file.
+ * @returns {Promise<string | undefined>} - The matched configuration file name.
+ */
 export async function validateProvidedConfigName(
   name?: string
 ): Promise<string | undefined> {
@@ -50,6 +64,11 @@ export async function validateProvidedConfigName(
   return matchedFile;
 }
 
+/**
+ * Parses the configuration file.
+ * @param {string} configFName - The name of the configuration file.
+ * @returns {Promise<{options: TaskConfig, imports: string[], tasks: {name: string, node: Node}[]}>} - The parsed configuration file.
+ */
 export async function parseConfig(configFName: string): Promise<{
   options: TaskConfig;
   imports: string[];
@@ -99,6 +118,11 @@ export async function parseConfig(configFName: string): Promise<{
   }
 }
 
+/**
+ * Selects a task from the configuration file.
+ * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
+ * @returns {Promise<{name: string, node: Node}[]>} - The selected tasks.
+ */
 export async function selectTaskFromConfig(
   tasks: { name: string; node: Node }[]
 ): Promise<{ name: string; node: Node }[]> {
@@ -116,6 +140,13 @@ export async function selectTaskFromConfig(
   return [tasks.find((t) => t.name === response.task)!];
 }
 
+/**
+ * Generates an individual task file.
+ * @param {TaskConfig} options - The task configuration options.
+ * @param {string[]} imports - The imports in the configuration file.
+ * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
+ * @returns {string} - The generated task file.
+ */
 export function generateIndividualTaskFile(
   options: TaskConfig,
   imports: string[],
@@ -149,6 +180,13 @@ export function generateIndividualTaskFile(
   return generated.code;
 }
 
+/**
+ * Generates a multi-task file.
+ * @param {TaskConfig} options - The task configuration options.
+ * @param {string[]} imports - The imports in the configuration file.
+ * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
+ * @returns {string} - The generated multi-task file.
+ */
 export function generateMultiTaskFile(
   options: TaskConfig,
   imports: string[],
@@ -157,7 +195,7 @@ export function generateMultiTaskFile(
   const generatedCode = `
   const options = ${JSON.stringify(options, null, 2)};
 
-  ${tasks.map((task) => generate(task.node).code).join('\n')};`;
+  ${tasks.map((task) => generate(task.node).code).join("\n")};`;
 
   const transpiledCode = babel.transformSync(generatedCode, {
     presets: [
@@ -180,6 +218,10 @@ export function generateMultiTaskFile(
   return generated.code;
 }
 
+/**
+ * Runs the provided code in a virtual machine.
+ * @param {string} code - The code to run.
+ */
 export function runInVM(code: string) {
   console.log(chalk.yellow(`\nℹ Running task ${chalk.blue(task.name)}:\n`));
 
