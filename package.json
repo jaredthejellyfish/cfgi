@@ -1,0 +1,32 @@
+{
+  "name": "cfgi",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "bin": {
+    "dir": "./dist/index.js"
+  },
+  "scripts": {
+    "link-cli": "yarn --global unlink && yarn --global link",
+    "dev": "tsc -w"
+  },
+  "lib": "dom",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^20.5.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "chalk-animation": "^2.0.3",
+    "commander": "^11.0.0",
+    "figlet": "^1.6.0",
+    "gradient-string": "^2.0.2",
+    "inquirer": "^9.2.10",
+    "nanospinner": "^1.1.0",
+    "ora": "^7.0.1"
+  }
+}
