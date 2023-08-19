@@ -1,4 +1,4 @@
-# cfgi
+# cfgi [![wakatime](https://wakatime.com/badge/github/jaredthejellyfish/cfgi.svg)](https://wakatime.com/badge/github/jaredthejellyfish/cfgi)
 
 The `cfgi` project is a command runner which enables you to create tasks with synchronous or asynchronous commands, capturing their output live or in a silent mode.
 
