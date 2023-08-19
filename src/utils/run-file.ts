@@ -32,8 +32,8 @@ const currentDirectory: string = process.cwd();
 
 /**
  * Finds all the configuration files in a directory.
- * @function findConfigFilesInDir
  * @memberof cli
+ * @function findConfigFilesInDir
  * @async
  * @param {string} dir - The directory to search in.
  * @returns {Promise<string>} - The name of the selected configuration file.
@@ -57,8 +57,8 @@ export async function findConfigFilesInDir(dir?: string): Promise<string[]> {
 
 /**
  * Selects a configuration file from a directory.
- * @function selectConfigNameFromDir
  * @memberof cli
+ * @function selectConfigNameFromDir
  * @async
  * @param {string[]} files - The configuration files in the directory.
  * @returns {Promise<string>} - The name of the selected configuration file.
@@ -78,8 +78,8 @@ export async function selectConfigNameFromDir(
 
 /**
  * Validates the provided configuration name.
- * @function validateProvidedConfigName
  * @memberof cli
+ * @function validateProvidedConfigName
  * @async
  * @param {string} name - The name of the configuration file.
  * @returns {Promise<string | undefined>} - The matched configuration file name.
@@ -105,8 +105,8 @@ export async function validateProvidedConfigName(
 
 /**
  * Parses the configuration file.
- * @function parseConfig
  * @memberof cli
+ * @function parseConfig
  * @async
  * @param {string} configFName - The name of the configuration file.
  * @returns {Promise<options:TaskConfig,imports:Array<string>,tasks:Array<{name:string,node:Node }>>} - The parsed configuration file.
@@ -162,8 +162,8 @@ export async function parseConfig(configFName: string): Promise<{
 
 /**
  * Selects a task from the configuration file.
- * @function selectTaskFromConfig
  * @memberof cli
+ * @function selectTaskFromConfig
  * @async
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
  * @returns {Promise<Array<{name: string, node: Node}>>} - The selected tasks.
@@ -187,8 +187,8 @@ export async function selectTaskFromConfig(
 
 /**
  * Generates an individual task file.
- * @function generateIndividualTaskFile
  * @memberof cli
+ * @function generateIndividualTaskFile
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -229,8 +229,8 @@ export function generateIndividualTaskFile(
 
 /**
  * Generates a multi-task file.
- * @function generateMultiTaskFile
  * @memberof cli
+ * @function generateMultiTaskFile
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -269,8 +269,8 @@ export function generateMultiTaskFile(
 
 /**
  * Runs the provided code in a virtual machine.
- * @function runInVM
  * @memberof cli
+ * @function runInVM
  * @param {string} code - The code to run.
  * @returns {void}
  */

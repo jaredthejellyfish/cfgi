@@ -46,8 +46,8 @@ task(
 
 /**
  * Generates a new configuration file asynchronously.
- * @function generateNewConfig
  * @memberof cli
+ * @function generateNewConfig
  * @async
  * @param {string} [configName] - The name for the new configuration. If not provided, the user will be prompted for input.
  * @returns {Promise<string>} The name of the generated configuration file.

@@ -18,9 +18,9 @@ import { Node } from "@babel/types";
 import inquirer from "inquirer";
 
 /**
+ * @namespace cli
  * @fileOverview The main CLI program.
  * @author Gerard Hernandez
- * @namespace cli
  *
  * @requires     {@link https://www.npmjs.com/package/commander | commander}
  * @requires     {@link https://www.npmjs.com/package/chalk | chalk}

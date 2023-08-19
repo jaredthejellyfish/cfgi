@@ -7,9 +7,9 @@ import {
 } from "./utils/cfgi-runner.js";
 
 /**
+ * @namespace runner
  * @fileOverview The main CLI program.
  * @author Gerard Hernandez
- * @namespace runner
  */
 
 export { task, command, runs, commandLive, TaskConfig };
