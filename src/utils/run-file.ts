@@ -14,7 +14,7 @@ const generate = pkg.default;
  * @fileOverview Manages the running of a configuration file.
  * @author Gerard Hernandez
  *
- * @module cfgi-runner
+ * @module cfgi/cli
  *
  * @requires     {@link https://nodejs.org/api/fs.html | fs}
  * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
@@ -32,10 +32,6 @@ const generate = pkg.default;
  *
  */
 
-/**
- * Returns the current working directory.
- * @type {string}
- */
 const currentDirectory: string = process.cwd();
 
 /**

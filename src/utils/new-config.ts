@@ -5,7 +5,7 @@ import chalk from "chalk";
 /**
  * @fileOverview Manages the generation of a new configuration file.
  * @author Gerard Hernandez
- * @module cfig-cli
+ * @module cfgi/cli
  *
  * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
  * @requires     {@link https://www.npmjs.com/package/chalk | chalk}

@@ -18,7 +18,7 @@ import { Node } from "@babel/types";
 import inquirer from "inquirer";
 
 /**
- * @fileOverview The main file for the CLI tool, the entry point for the CLI tool. It holds all the logic for the CLI tool.
+ * @fileOverview The main file that holds all the logic for the CLI tool.
  * @author Gerard Hernandez
  *
  * @requires     {@link https://www.npmjs.com/package/commander | commander}

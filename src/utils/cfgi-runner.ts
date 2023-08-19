@@ -7,7 +7,7 @@ const pink = chalk.hex("#FFC0CB");
 /**
  * @fileOverview Defines all the logic for the cfgi runner.
  * @author Gerard Hernandez
- * @module cfgi-runner
+ * @module cfgi/runner
  *
  * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
  * @requires     {@link https://www.npmjs.com/package/ora | ora}
