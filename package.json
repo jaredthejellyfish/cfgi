@@ -9,10 +9,11 @@
     "cfgi": "./dist/cli.js"
   },
   "scripts": {
-    "link-cli": "yarn --global unlink || yarn --global link",
+    "link-cli": "(yarn --global unlink || true) && chmod +x dist/cli.js && yarn --global link",
     "unlink-cli": "yarn --global unlink",
     "dev": "tsc -w",
-    "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz"
+    "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz",
+    "publish": "tsc && git add . && git commit -m 'build' && git push && pnpm publish"
   },
   "lib": "dom",
   "keywords": [],
@@ -32,7 +33,6 @@
     "commander": "^11.0.0",
     "inquirer": "^9.2.10",
     "ora": "^7.0.1",
-    "cfgi": "file:/Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz",
     "typescript": "^5.1.6"
   }
 }
