@@ -4,6 +4,6 @@ import {
   runs,
   commandLive,
   TaskConfig,
-} from "./utils/lake-runner.js";
+} from "./utils/cfgi-runner.js";
 
 export { task, command, runs, commandLive, TaskConfig };

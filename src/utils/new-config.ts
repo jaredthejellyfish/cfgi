@@ -23,7 +23,7 @@ const configTemplate = (
   command,
   runs,
   commandLive,
-} from "lake";
+} from "cfgi";
 ${includeOptions ? configOptionsTemplate : ""}
 task(
   "${name}",
@@ -82,7 +82,7 @@ export async function generateNewConfig(
    * @type {string}
    */
   const configFileName =
-    configNamePrompted.replace(/ /g, "-").toLowerCase() + ".lake.mjs";
+    configNamePrompted.replace(/ /g, "-").toLowerCase() + ".cfgi.mjs";
 
   // Current working directory
   const cwd = process.cwd();

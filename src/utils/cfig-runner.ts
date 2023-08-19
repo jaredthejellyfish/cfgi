@@ -321,9 +321,9 @@ function cleanup(
 
 // console.log("");
 // console.log(
-//   chalk.bold(`${chalk.red("♥")} Thank you for using ${pink("lake")} :)`)
+//   chalk.bold(`${chalk.red("♥")} Thank you for using ${pink("cfgi")} :)`)
 // );
 // console.log("");
 // console.log(pink("⏽ Author: @jaredthejellyfish"));
-// console.log(pink("⏽ Github: https://github.com/jaredthejellyfish/lake"));
+// console.log(pink("⏽ Github: https://github.com/jaredthejellyfish/cfgi"));
 // console.log("");

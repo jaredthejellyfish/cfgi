@@ -1,6 +1,6 @@
 import { Command } from "commander";
 
-declare module "lake" {
+declare module "cfgi" {
   interface TaskConfig {
     silent?: boolean;
     exclude?: "live" | "sync" | "none";

@@ -1,18 +1,18 @@
 {
-  "name": "lake",
+  "name": "cfgi",
   "version": "0.0.2",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
-  "types": "types/lake.d.ts",
+  "types": "types/cfgi.d.ts",
   "bin": {
-    "lake": "./dist/cli.js"
+    "cfgi": "./dist/cli.js"
   },
   "scripts": {
     "link-cli": "yarn --global unlink || yarn --global link",
     "unlink-cli": "yarn --global unlink",
     "dev": "tsc -w",
-    "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/lake-0.0.2.tgz"
+    "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz"
   },
   "lib": "dom",
   "keywords": [],
@@ -32,7 +32,7 @@
     "commander": "^11.0.0",
     "inquirer": "^9.2.10",
     "ora": "^7.0.1",
-    "lake": "file:/Users/gerardhernandez/code/cfgi/lake-0.0.2.tgz",
+    "cfgi": "file:/Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz",
     "typescript": "^5.1.6"
   }
 }
