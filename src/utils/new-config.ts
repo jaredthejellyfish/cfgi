@@ -23,7 +23,7 @@ const configTemplate = (
   command,
   runs,
   commandLive,
-} from "plow";
+} from "lake";
 ${includeOptions ? configOptionsTemplate : ""}
 task(
   "${name}",
@@ -82,7 +82,7 @@ export async function generateNewConfig(
    * @type {string}
    */
   const configFileName =
-    configNamePrompted.replace(/ /g, "-").toLowerCase() + ".plow.mjs";
+    configNamePrompted.replace(/ /g, "-").toLowerCase() + ".lake.mjs";
 
   // Current working directory
   const cwd = process.cwd();

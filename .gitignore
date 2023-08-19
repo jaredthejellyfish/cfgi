@@ -1,6 +1,6 @@
 node_modules/
 dist/
-*.plow.js
-*.plow.mjs
-*.plow.ts
+*.lake.js
+*.lake.mjs
+*.lake.ts
 test*

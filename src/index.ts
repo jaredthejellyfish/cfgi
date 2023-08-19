@@ -4,6 +4,6 @@ import {
   runs,
   commandLive,
   TaskConfig,
-} from "./utils/plow-runner.js";
+} from "./utils/lake-runner.js";
 
 export { task, command, runs, commandLive, TaskConfig };

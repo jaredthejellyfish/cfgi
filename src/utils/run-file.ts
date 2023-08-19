@@ -1,6 +1,6 @@
 import * as fs from "fs/promises";
 import inquirer from "inquirer";
-import { task, command, runs, commandLive, TaskConfig } from "./plow-runner.js";
+import { task, command, runs, commandLive, TaskConfig } from "./lake-runner.js";
 import { parse } from "@babel/parser";
 import pkg from "@babel/generator";
 import babel from "@babel/core";
@@ -28,7 +28,7 @@ export async function findConfigFilesInDir(dir?: string): Promise<string[]> {
   const files = await fs.readdir(configPath);
 
   const configFiles = files.filter(
-    (file) => file.endsWith(".plow.js") || file.endsWith(".plow.ts") || file.endsWith(".mjs")
+    (file) => file.endsWith(".lake.js") || file.endsWith(".lake.ts") || file.endsWith(".mjs")
   );
 
   const availableFiles = configFiles.sort((a, b) => a.localeCompare(b));
@@ -60,7 +60,7 @@ export async function validateProvidedConfigName(
   const files = await fs.readdir(currentDirectory);
 
   const configFiles = files.filter(
-    (file) => file.endsWith(".plow.js") || file.endsWith(".plow.ts") || file.endsWith(".mjs")
+    (file) => file.endsWith(".lake.js") || file.endsWith(".lake.ts") || file.endsWith(".mjs")
   );
 
   const matchedFile = configFiles.find((file) => file.includes(name));

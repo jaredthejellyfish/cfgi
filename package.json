@@ -1,18 +1,18 @@
 {
-  "name": "plow-runner",
+  "name": "lake",
   "version": "0.0.2",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
-  "types": "types/plow.d.ts",
+  "types": "types/lake.d.ts",
   "bin": {
-    "plow": "./dist/cli.js"
+    "lake": "./dist/cli.js"
   },
   "scripts": {
     "link-cli": "yarn --global unlink || yarn --global link",
     "unlink-cli": "yarn --global unlink",
     "dev": "tsc -w",
-    "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/plow-0.0.2.tgz"
+    "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/lake-0.0.2.tgz"
   },
   "lib": "dom",
   "keywords": [],
@@ -32,7 +32,7 @@
     "commander": "^11.0.0",
     "inquirer": "^9.2.10",
     "ora": "^7.0.1",
-    "plow": "file:/Users/gerardhernandez/code/cfgi/plow-0.0.2.tgz",
+    "lake": "file:/Users/gerardhernandez/code/cfgi/lake-0.0.2.tgz",
     "typescript": "^5.1.6"
   }
 }

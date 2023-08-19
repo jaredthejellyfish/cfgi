@@ -1,6 +1,6 @@
 import { Command } from "commander";
 
-declare module "plow" {
+declare module "lake" {
   interface TaskConfig {
     silent?: boolean;
     exclude?: "live" | "sync" | "none";

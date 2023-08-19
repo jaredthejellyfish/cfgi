@@ -44,9 +44,9 @@ dependencies:
   ora:
     specifier: ^7.0.1
     version: 7.0.1
-  plow:
-    specifier: file:/Users/gerardhernandez/code/cfgi/plow-0.0.2.tgz
-    version: file:plow-0.0.2.tgz
+  lake:
+    specifier: file:/Users/gerardhernandez/code/cfgi/lake-0.0.2.tgz
+    version: file:lake-0.0.2.tgz
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
@@ -2041,9 +2041,9 @@ packages:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
     dev: false
 
-  file:plow-0.0.2.tgz:
-    resolution: {integrity: sha512-W1gy29QIjg95OSpmqzhLGMk50tl2yLnxBiLEHNLg8m2ABX17xeRZ13gAYKvMUYO9VXI1Juf27Ni3p2lwunyBFA==, tarball: file:plow-0.0.2.tgz}
-    name: plow
+  file:lake-0.0.2.tgz:
+    resolution: {integrity: sha512-W1gy29QIjg95OSpmqzhLGMk50tl2yLnxBiLEHNLg8m2ABX17xeRZ13gAYKvMUYO9VXI1Juf27Ni3p2lwunyBFA==, tarball: file:lake-0.0.2.tgz}
+    name: lake
     version: 0.0.2
     hasBin: true
     dependencies:
