@@ -5,12 +5,22 @@ import ora from "ora";
 const pink = chalk.hex("#FFC0CB");
 
 /**
- * @fileOverview Defines all the functions for the cfgi runner.
+ * @fileOverview Defines all the logic for the cfgi runner.
  * @author Gerard Hernandez
+ * @module cfgi-runner
  *
  * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
  * @requires     {@link https://www.npmjs.com/package/ora | ora}
  * @requires     {@link https://nodejs.org/api/process.html | process}
+ *
+ * @exports commandLive
+ * @exports command
+ * @exports runs
+ * @exports task
+ * @exports TaskConfig
+ * @exports RunOutput
+ * @exports RunError
+ *
  */
 
 process.on("SIGINT", () => {
@@ -40,8 +50,7 @@ export type RunError = {
 
 /**
  * Executes a command synchronously and captures live output.
- * @memberof cfgi
- * @function commandLive
+ * @function
  * @param {string} cmd - The command to be executed.
  * @param {boolean} [silent=false] - If true, suppresses output; otherwise, displays live output.
  * @returns {RunOutput} A success message if the command is executed successfully, or nothing if there's an error.
@@ -83,8 +92,7 @@ export function commandLive(cmd: string, silent = false): RunOutput {
 
 /**
  * Executes a command synchronously using the specified command string.
- * @memberof cfgi
- * @function command
+ * @function
  * @param {string} cmd - The command string to be executed.
  * @param {boolean} [silent=true] - Whether to suppress output.
  * @returns {RunOutput} An object containing information about the command execution.
@@ -107,8 +115,7 @@ export function command(cmd: string, silent = true): RunOutput {
  * Represents a run within a task.
  * A run must always have a return statement within its function body.
  * If it does not have one it will be added automatically.
- * @memberof cfgi
- * @function runs
+ * @function
  * @param {string} name - The name of the run.
  * @param {function|RunOutput} runFunction - The function that defines the run's behavior.
  * @returns {RunsReturn} An object representing the run.
@@ -164,8 +171,7 @@ export function runs(
 
 /**
  * Represents a task with a setup function and a list of runs.
- * @memberof cfgi
- * @function task
+ * @function
  * @param {string} name - The name of the task.
  * @param {function} setup - The setup function to be executed before runs.
  * @param {{ name: string, run: function() }} runs - An array of runs, each containing a name and a run function.
@@ -356,12 +362,3 @@ function cleanup(
     console.log("");
   }
 }
-
-// console.log("");
-// console.log(
-//   chalk.bold(`${chalk.red("♥")} Thank you for using ${pink("cfgi")} :)`)
-// );
-// console.log("");
-// console.log(pink("⏽ Author: @jaredthejellyfish"));
-// console.log(pink("⏽ Github: https://github.com/jaredthejellyfish/cfgi"));
-// console.log("");

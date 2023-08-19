@@ -5,6 +5,7 @@ import chalk from "chalk";
 /**
  * @fileOverview Manages the generation of a new configuration file.
  * @author Gerard Hernandez
+ * @module cfig-cli
  *
  * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
  * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
@@ -46,8 +47,7 @@ task(
 
 /**
  * Generates a new configuration file asynchronously.
- * @memberof cli
- * @function generateNewConfig
+ * @function
  * @async
  * @param {string} [configName] - The name for the new configuration. If not provided, the user will be prompted for input.
  * @returns {Promise<string>} The name of the generated configuration file.

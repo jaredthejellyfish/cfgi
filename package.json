@@ -3,7 +3,7 @@
   "version": "0.6.0",
   "description": "",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/cfgi.js",
   "types": "types/cfgi.d.ts",
   "bin": {
     "cfgi": "./dist/cli.js"
@@ -13,8 +13,8 @@
     "unlink-cli": "yarn --global unlink",
     "dev": "tsc -w",
     "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz",
-    "patch": "git add . && git commit -m \"Minor patch\"  && git add . && git commit -m \"Bump version: $(pnpm version minor)\" && git push",
-    "jsdoc": "rm -rf docs/ && jsdoc -d docs dist/* --recurse"
+    "build": "rm -rf docs/ ; rm -rf dist/ && tsc ; chmod +x dist/cli.js ; jsdoc -d docs dist/* --recurse -p",
+    "jsdoc": "rm -rf docs/ && jsdoc -d docs dist/* --recurse -p"
   },
   "lib": "dom",
   "keywords": [],

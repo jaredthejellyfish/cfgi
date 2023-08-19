@@ -18,13 +18,21 @@ import { Node } from "@babel/types";
 import inquirer from "inquirer";
 
 /**
- * @fileOverview The main CLI program.
+ * @fileOverview The main file for the CLI tool, the entry point for the CLI tool. It holds all the logic for the CLI tool.
  * @author Gerard Hernandez
- * @namespace cli
  *
  * @requires     {@link https://www.npmjs.com/package/commander | commander}
  * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
  * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
+ *
+ * @requires     {@link module:run-file~findConfigFilesInDir | findConfigFilesInDir}
+ * @requires     {@link module:run-file~validateProvidedConfigName | validateProvidedConfigName}
+ * @requires     {@link module:run-file~generateIndividualTaskFile | generateIndividualTaskFile}
+ * @requires     {@link module:run-file~parseConfig | parseConfig}
+ * @requires     {@link module:run-file~selectTaskFromConfig | selectTaskFromConfig}
+ * @requires     {@link module:run-file~generateMultiTaskFile | generateMultiTaskFile}
+ * @requires     {@link module:run-file~selectConfigNameFromDir | selectConfigNameFromDir}
+ * @requires     {@link module:run-file~runInVM | runInVM}
  */
 
 const program = new Command();

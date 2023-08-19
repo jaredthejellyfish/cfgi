@@ -8,12 +8,13 @@ import chalk from "chalk";
 import { task, command, runs, commandLive, TaskConfig } from "./cfgi-runner.js";
 import { Node } from "@babel/types";
 
-
 const generate = pkg.default;
 
 /**
  * @fileOverview Manages the running of a configuration file.
  * @author Gerard Hernandez
+ *
+ * @module cfgi-runner
  *
  * @requires     {@link https://nodejs.org/api/fs.html | fs}
  * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
@@ -22,6 +23,13 @@ const generate = pkg.default;
  * @requires     {@link https://www.npmjs.com/package/@babel/core | @babel/core}
  * @requires     {@link https://www.npmjs.com/package/vm | vm}
  * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
+ *
+ * @requires     {@link module:cfgi-runner~task | task}
+ * @requires     {@link module:cfgi-runner~command | command}
+ * @requires     {@link module:cfgi-runner~runs | runs}
+ * @requires     {@link module:cfgi-runner~commandLive | commandLive}
+ * @requires     {@link module:cfgi-runner~TaskConfig | TaskConfig}
+ *
  */
 
 /**
@@ -32,8 +40,7 @@ const currentDirectory: string = process.cwd();
 
 /**
  * Finds all the configuration files in a directory.
- * @memberof cli
- * @function findConfigFilesInDir
+ * @function
  * @async
  * @param {string} dir - The directory to search in.
  * @returns {Promise<string>} - The name of the selected configuration file.
@@ -57,8 +64,7 @@ export async function findConfigFilesInDir(dir?: string): Promise<string[]> {
 
 /**
  * Selects a configuration file from a directory.
- * @memberof cli
- * @function selectConfigNameFromDir
+ * @function
  * @async
  * @param {string[]} files - The configuration files in the directory.
  * @returns {Promise<string>} - The name of the selected configuration file.
@@ -78,8 +84,7 @@ export async function selectConfigNameFromDir(
 
 /**
  * Validates the provided configuration name.
- * @memberof cli
- * @function validateProvidedConfigName
+ * @function
  * @async
  * @param {string} name - The name of the configuration file.
  * @returns {Promise<string | undefined>} - The matched configuration file name.
@@ -105,8 +110,7 @@ export async function validateProvidedConfigName(
 
 /**
  * Parses the configuration file.
- * @memberof cli
- * @function parseConfig
+ * @function
  * @async
  * @param {string} configFName - The name of the configuration file.
  * @returns {Promise<options:TaskConfig,imports:Array<string>,tasks:Array<{name:string,node:Node }>>} - The parsed configuration file.
@@ -162,8 +166,7 @@ export async function parseConfig(configFName: string): Promise<{
 
 /**
  * Selects a task from the configuration file.
- * @memberof cli
- * @function selectTaskFromConfig
+ * @function
  * @async
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
  * @returns {Promise<Array<{name: string, node: Node}>>} - The selected tasks.
@@ -187,8 +190,7 @@ export async function selectTaskFromConfig(
 
 /**
  * Generates an individual task file.
- * @memberof cli
- * @function generateIndividualTaskFile
+ * @function
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -229,8 +231,7 @@ export function generateIndividualTaskFile(
 
 /**
  * Generates a multi-task file.
- * @function generateMultiTaskFile
- * @memberof cli
+ * @function
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -269,8 +270,7 @@ export function generateMultiTaskFile(
 
 /**
  * Runs the provided code in a virtual machine.
- * @function runInVM
- * @memberof cli
+ * @function
  * @param {string} code - The code to run.
  * @returns {void}
  */
