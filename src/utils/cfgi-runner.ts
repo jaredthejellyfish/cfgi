@@ -31,11 +31,15 @@ export type RunError = {
 
 /**
  * Executes a command synchronously and captures live output.
- *
+ * @function commandLive
  * @param {string} cmd - The command to be executed.
  * @param {boolean} [silent=false] - If true, suppresses output; otherwise, displays live output.
  * @returns {RunOutput} A success message if the command is executed successfully, or nothing if there's an error.
  * @throws {Error} Throws an error if the command is not provided or not correctly formatted, or if an error occurs during execution.
+ * @example
+ * commandLive('pnpm next dev'); //=> { output: 'Command exited successfully.', silent: false, isError: false }
+ * @example
+ * commandLive('pnpm next dev', true); //=> { output: '', silent: true, isError: false }
  */
 export function commandLive(cmd: string, silent = false): RunOutput {
   if (!cmd) {
@@ -69,10 +73,14 @@ export function commandLive(cmd: string, silent = false): RunOutput {
 
 /**
  * Executes a command synchronously using the specified command string.
- *
+ * @function command
  * @param {string} cmd - The command string to be executed.
  * @param {boolean} [silent=true] - Whether to suppress output.
  * @returns {RunOutput} An object containing information about the command execution.
+ * @example
+ * command('pnpm prettier --write .'); //=> { output: '', silent: true, isError: false }
+ * @example
+ * command('pnpm prettier --write .', false); //=> { output: '...', silent: false, isError: false }
  */
 export function command(cmd: string, silent = true): RunOutput {
   try {
@@ -90,9 +98,13 @@ export function command(cmd: string, silent = true): RunOutput {
  * If it does not have one it will be added automatically.
  *
  * @param {string} name - The name of the run.
- * @param {() => void | RunOutput} runFunction - The function that defines the run's behavior.
+ * @param {function|RunOutput} runFunction - The function that defines the run's behavior.
  * @returns {RunsReturn} An object representing the run.
- */
+ * @example
+ * runs("a passing command", () => {
+ *  command("exit 0");
+ * });
+ * */
 export function runs(
   name: string,
   runFunction: () => void | RunOutput
@@ -142,10 +154,23 @@ export function runs(
  * Represents a task with a setup function and a list of runs.
  *
  * @param {string} name - The name of the task.
- * @param {() => void} setup - The setup function to be executed before runs.
- * @param {{ name: string; run: () => { output: string; silent: boolean; isError: boolean; }; }[]} runs - An array of runs, each containing a name and a run function.
+ * @param {function} setup - The setup function to be executed before runs.
+ * @param {{ name: string, run: function() }} runs - An array of runs, each containing a name and a run function.
  * @param {TaskConfig} [config] - An optional configuration object for the task.
  * @returns {{passed: number, errors: number}} - The number of passed and failed runs.
+ * @example
+ * task(
+ *   "a task", // name
+ *   () => { // setup
+ *     command("exit 0");
+ *   },
+ *   [ // runs
+ *     runs("a passing command", () => {
+ *       command("exit 0");
+ *     }),
+ *   ]
+ * );
+ *
  */
 export function task(
   name: string,

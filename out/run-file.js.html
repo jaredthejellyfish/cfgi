@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: run-file.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: run-file.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as fs from "fs/promises";
+import inquirer from "inquirer";
+import { task, command, runs, commandLive } from "./cfgi-runner.js";
+import { parse } from "@babel/parser";
+import pkg from "@babel/generator";
+import babel from "@babel/core";
+import chalk from "chalk";
+import { createContext, Script } from "vm";
+const generate = pkg.default;
+/**
+ * Returns the current working directory.
+ * @type {string}
+ */
+export const currentDirectory = process.cwd();
+/**
+ * Finds all the configuration files in a directory.
+ * @function findConfigFilesInDir
+ * @async
+ * @param {string} dir - The directory to search in.
+ * @returns {Promise&lt;string>} - The name of the selected configuration file.
+ */
+export async function findConfigFilesInDir(dir) {
+    const configPath = dir || currentDirectory;
+    const files = await fs.readdir(configPath);
+    const configFiles = files.filter((file) => file.endsWith(".cfgi.js") ||
+        file.endsWith(".cfgi.ts") ||
+        file.endsWith(".mjs"));
+    const availableFiles = configFiles.sort((a, b) => a.localeCompare(b));
+    return availableFiles;
+}
+/**
+ * Selects a configuration file from a directory.
+ * @function selectConfigNameFromDir
+ * @async
+ * @param {string[]} files - The configuration files in the directory.
+ * @returns {Promise&lt;string>} - The name of the selected configuration file.
+ */
+export async function selectConfigNameFromDir(files) {
+    const response = await inquirer.prompt({
+        type: "list",
+        name: "config",
+        message: "Which config file would you like to run?",
+        choices: files,
+    });
+    return response.config;
+}
+/**
+ * Validates the provided configuration name.
+ * @function validateProvidedConfigName
+ * @async
+ * @param {string} name - The name of the configuration file.
+ * @returns {Promise&lt;string | undefined>} - The matched configuration file name.
+ */
+export async function validateProvidedConfigName(name) {
+    if (!name)
+        return;
+    const files = await fs.readdir(currentDirectory);
+    const configFiles = files.filter((file) => file.endsWith(".cfgi.js") ||
+        file.endsWith(".cfgi.ts") ||
+        file.endsWith(".mjs"));
+    const matchedFile = configFiles.find((file) => file.includes(name));
+    return matchedFile;
+}
+/**
+ * Parses the configuration file.
+ * @function parseConfig
+ * @async
+ * @param {string} configFName - The name of the configuration file.
+ * @returns {Promise&lt;options:TaskConfig,imports:Array&lt;string>,tasks:Array&lt;{name:string,node:Node }>>} - The parsed configuration file.
+ */
+export async function parseConfig(configFName) {
+    // read the contents of the config file as text
+    const code = await fs.readFile(configFName, "utf-8");
+    try {
+        const ast = parse(code, {
+            sourceType: "module",
+            plugins: ["typescript"],
+        });
+        let options = {};
+        let imports = [];
+        let tasks = [];
+        ast.program.body.forEach((node) => {
+            if (node.type === "ImportDeclaration") {
+                const importString = generate(node).code;
+                imports.push(importString);
+            }
+            if (node.type === "VariableDeclaration") {
+                // @ts-ignore
+                const declaredVariableName = node.declarations[0]?.id.name;
+                if (declaredVariableName === "options")
+                    if (node.declarations[0]?.init) {
+                        const optionsObjString = generate(node.declarations[0]?.init).code;
+                        options = eval(`(${optionsObjString})`);
+                    }
+            }
+            if ((node.type = "ExpressionStatement")) {
+                // @ts-expect-error
+                if (node.expression &amp;&amp; node.expression.callee.name) {
+                    // @ts-expect-error
+                    const taskName = node.expression.arguments[0].value;
+                    tasks.push({ name: taskName, node: node });
+                }
+            }
+        });
+        return { options, imports, tasks };
+    }
+    catch (e) {
+        return { options: {}, imports: [], tasks: [] };
+    }
+}
+/**
+ * Selects a task from the configuration file.
+ * @function selectTaskFromConfig
+ * @async
+ * @param {Array&lt;{name: string, node: Node}>} tasks - The tasks in the configuration file.
+ * @returns {Promise&lt;Array&lt;{name: string, node: Node}>>} - The selected tasks.
+ */
+export async function selectTaskFromConfig(tasks) {
+    const taskNames = tasks.map((t) => t.name);
+    const response = await inquirer.prompt({
+        type: "list",
+        name: "task",
+        message: "Which task would you like to execute?",
+        choices: taskNames.concat("all"),
+    });
+    if (response.task === "all")
+        return tasks;
+    return [tasks.find((t) => t.name === response.task)];
+}
+/**
+ * Generates an individual task file.
+ * @function generateIndividualTaskFile
+ * @param {TaskConfig} options - The task configuration options.
+ * @param {string[]} imports - The imports in the configuration file.
+ * @param {Array&lt;{name: string, node: Node}>} tasks - The tasks in the configuration file.
+ * @returns {string} - The generated task file.
+ */
+export function generateIndividualTaskFile(options, imports, tasks) {
+    const task = tasks[0];
+    const generatedCode = `
+  const options = ${JSON.stringify(options, null, 2)};
+
+  ${generate(task.node).code};`;
+    const transpiledCode = babel.transformSync(generatedCode, {
+        presets: [
+            [
+                "@babel/preset-env",
+                {
+                    targets: "> 0.25%, not dead", // Adjust this according to your needs
+                },
+            ],
+        ],
+    }).code;
+    const ast = parse(transpiledCode, {
+        sourceType: "module",
+        plugins: ["typescript"],
+    });
+    const generated = generate(ast, { retainLines: true });
+    return generated.code;
+}
+/**
+ * Generates a multi-task file.
+ * @function generateMultiTaskFile
+ * @param {TaskConfig} options - The task configuration options.
+ * @param {string[]} imports - The imports in the configuration file.
+ * @param {Array&lt;{name: string, node: Node}>} tasks - The tasks in the configuration file.
+ * @returns {string} - The generated multi-task file.
+ */
+export function generateMultiTaskFile(options, imports, tasks) {
+    const generatedCode = `
+  const options = ${JSON.stringify(options, null, 2)};
+
+  ${tasks.map((task) => generate(task.node).code).join("\n")};`;
+    const transpiledCode = babel.transformSync(generatedCode, {
+        presets: [
+            [
+                "@babel/preset-env",
+                {
+                    targets: "> 0.25%, not dead", // Adjust this according to your needs
+                },
+            ],
+        ],
+    }).code;
+    const ast = parse(transpiledCode, {
+        sourceType: "module",
+        plugins: ["typescript"],
+    });
+    const generated = generate(ast, { retainLines: true });
+    return generated.code;
+}
+/**
+ * Runs the provided code in a virtual machine.
+ * @function runInVM
+ * @param {string} code - The code to run.
+ * @returns {void}
+ */
+export function runInVM(code) {
+    console.log(chalk.yellow(`\nℹ Running task ${chalk.blue(task.name)}:\n`));
+    const script = new Script(code);
+    const context = createContext({
+        task,
+        command,
+        runs,
+        commandLive,
+    });
+    try {
+        script.runInContext(context);
+    }
+    catch (e) {
+        console.log(chalk.red("✖ Something went wrong!"));
+        console.log(e);
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#command">command</a></li><li><a href="global.html#commandLive">commandLive</a></li><li><a href="global.html#currentDirectory">currentDirectory</a></li><li><a href="global.html#findConfigFilesInDir">findConfigFilesInDir</a></li><li><a href="global.html#generateIndividualTaskFile">generateIndividualTaskFile</a></li><li><a href="global.html#generateMultiTaskFile">generateMultiTaskFile</a></li><li><a href="global.html#generateNewConfig">generateNewConfig</a></li><li><a href="global.html#parseConfig">parseConfig</a></li><li><a href="global.html#runInVM">runInVM</a></li><li><a href="global.html#runs">runs</a></li><li><a href="global.html#selectConfigNameFromDir">selectConfigNameFromDir</a></li><li><a href="global.html#selectTaskFromConfig">selectTaskFromConfig</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#validateProvidedConfigName">validateProvidedConfigName</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Aug 19 2023 03:30:52 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

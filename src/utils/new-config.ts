@@ -37,7 +37,8 @@ task(
 
 /**
  * Generates a new configuration file asynchronously.
- *
+ * @function generateNewConfig
+ * @async
  * @param {string} [configName] - The name for the new configuration. If not provided, the user will be prompted for input.
  * @returns {Promise<string>} The name of the generated configuration file.
  */
@@ -45,7 +46,7 @@ export async function generateNewConfig(
   configName?: string,
   includeSample: boolean = false,
   includeOptions: boolean = false
-) {
+): Promise<string> {
   /**
    * If configName is not provided, prompt the user for input.
    * @type {string}
@@ -77,10 +78,6 @@ export async function generateNewConfig(
       )}.\n`
     );
 
-  /**
-   * The filename for the generated configuration file.
-   * @type {string}
-   */
   const configFileName =
     configNamePrompted.replace(/ /g, "-").toLowerCase() + ".cfgi.mjs";
 

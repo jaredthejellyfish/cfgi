@@ -4,3 +4,4 @@ dist/
 *.cfgi.mjs
 *.cfgi.ts
 test*
+.DS*
