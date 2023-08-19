@@ -1,6 +1,6 @@
 node_modules/
 dist/
-*.cfgi.js
-*.cfgi.mjs
-*.cfgi.ts
+*.plow.js
+*.plow.mjs
+*.plow.ts
 test*

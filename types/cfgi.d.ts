@@ -1,6 +1,6 @@
 import { Command } from "commander";
 
-declare module "cfgi" {
+declare module "plow" {
   interface TaskConfig {
     silent?: boolean;
     exclude?: "live" | "sync" | "none";

@@ -304,7 +304,7 @@ function cleanup(
     console.log("");
     console.log(
       chalk.yellow(
-        `ℹ Completed task ${pink(taskName)} in ${totalTime! / 1000}s`
+        `ℹ Plowed task ${pink(taskName)} in ${totalTime! / 1000}s`
       )
     );
     return;
@@ -312,7 +312,7 @@ function cleanup(
     console.log("");
     console.log(
       chalk.yellow(
-        `ℹ Completed task ${pink(taskName)} in ${totalTime! / 1000}s`
+        `ℹ Plowed task ${pink(taskName)} in ${totalTime! / 1000}s`
       )
     );
     console.log("");
@@ -321,9 +321,9 @@ function cleanup(
 
 // console.log("");
 // console.log(
-//   chalk.bold(`${chalk.red("♥")} Thank you for using ${pink("cfgi")} :)`)
+//   chalk.bold(`${chalk.red("♥")} Thank you for using ${pink("plow")} :)`)
 // );
 // console.log("");
 // console.log(pink("⏽ Author: @jaredthejellyfish"));
-// console.log(pink("⏽ Github: https://github.com/jaredthejellyfish/cfgi"));
+// console.log(pink("⏽ Github: https://github.com/jaredthejellyfish/plow"));
 // console.log("");

@@ -4,6 +4,6 @@ import {
   runs,
   commandLive,
   TaskConfig,
-} from "./utils/cfgi-runner.js";
+} from "./utils/plow-runner.js";
 
 export { task, command, runs, commandLive, TaskConfig };
