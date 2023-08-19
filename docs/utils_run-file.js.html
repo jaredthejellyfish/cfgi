@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: run-file.js</title>
+    <title>JSDoc: Source: utils/run-file.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: run-file.js</h1>
+    <h1 class="page-title">Source: utils/run-file.js</h1>
 
     
 
@@ -28,21 +28,34 @@
         <article>
             <pre class="prettyprint source linenums"><code>import * as fs from "fs/promises";
 import inquirer from "inquirer";
-import { task, command, runs, commandLive } from "./cfgi-runner.js";
 import { parse } from "@babel/parser";
 import pkg from "@babel/generator";
 import babel from "@babel/core";
-import chalk from "chalk";
 import { createContext, Script } from "vm";
+import chalk from "chalk";
+import { task, command, runs, commandLive } from "./cfgi-runner.js";
 const generate = pkg.default;
+/**
+ * @fileOverview Manages the running of a configuration file.
+ * @author Gerard Hernandez
+ *
+ * @requires     {@link https://nodejs.org/api/fs.html | fs}
+ * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
+ * @requires     {@link https://www.npmjs.com/package/@babel/parser | @babel/parser}
+ * @requires     {@link https://www.npmjs.com/package/@babel/generator | @babel/generator}
+ * @requires     {@link https://www.npmjs.com/package/@babel/core | @babel/core}
+ * @requires     {@link https://www.npmjs.com/package/vm | vm}
+ * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
+ */
 /**
  * Returns the current working directory.
  * @type {string}
  */
-export const currentDirectory = process.cwd();
+const currentDirectory = process.cwd();
 /**
  * Finds all the configuration files in a directory.
  * @function findConfigFilesInDir
+ * @memberof cli
  * @async
  * @param {string} dir - The directory to search in.
  * @returns {Promise&lt;string>} - The name of the selected configuration file.
@@ -59,6 +72,7 @@ export async function findConfigFilesInDir(dir) {
 /**
  * Selects a configuration file from a directory.
  * @function selectConfigNameFromDir
+ * @memberof cli
  * @async
  * @param {string[]} files - The configuration files in the directory.
  * @returns {Promise&lt;string>} - The name of the selected configuration file.
@@ -75,6 +89,7 @@ export async function selectConfigNameFromDir(files) {
 /**
  * Validates the provided configuration name.
  * @function validateProvidedConfigName
+ * @memberof cli
  * @async
  * @param {string} name - The name of the configuration file.
  * @returns {Promise&lt;string | undefined>} - The matched configuration file name.
@@ -92,6 +107,7 @@ export async function validateProvidedConfigName(name) {
 /**
  * Parses the configuration file.
  * @function parseConfig
+ * @memberof cli
  * @async
  * @param {string} configFName - The name of the configuration file.
  * @returns {Promise&lt;options:TaskConfig,imports:Array&lt;string>,tasks:Array&lt;{name:string,node:Node }>>} - The parsed configuration file.
@@ -139,6 +155,7 @@ export async function parseConfig(configFName) {
 /**
  * Selects a task from the configuration file.
  * @function selectTaskFromConfig
+ * @memberof cli
  * @async
  * @param {Array&lt;{name: string, node: Node}>} tasks - The tasks in the configuration file.
  * @returns {Promise&lt;Array&lt;{name: string, node: Node}>>} - The selected tasks.
@@ -158,6 +175,7 @@ export async function selectTaskFromConfig(tasks) {
 /**
  * Generates an individual task file.
  * @function generateIndividualTaskFile
+ * @memberof cli
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array&lt;{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -189,6 +207,7 @@ export function generateIndividualTaskFile(options, imports, tasks) {
 /**
  * Generates a multi-task file.
  * @function generateMultiTaskFile
+ * @memberof cli
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array&lt;{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -219,6 +238,7 @@ export function generateMultiTaskFile(options, imports, tasks) {
 /**
  * Runs the provided code in a virtual machine.
  * @function runInVM
+ * @memberof cli
  * @param {string} code - The code to run.
  * @returns {void}
  */
@@ -249,13 +269,13 @@ export function runInVM(code) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#command">command</a></li><li><a href="global.html#commandLive">commandLive</a></li><li><a href="global.html#currentDirectory">currentDirectory</a></li><li><a href="global.html#findConfigFilesInDir">findConfigFilesInDir</a></li><li><a href="global.html#generateIndividualTaskFile">generateIndividualTaskFile</a></li><li><a href="global.html#generateMultiTaskFile">generateMultiTaskFile</a></li><li><a href="global.html#generateNewConfig">generateNewConfig</a></li><li><a href="global.html#parseConfig">parseConfig</a></li><li><a href="global.html#runInVM">runInVM</a></li><li><a href="global.html#runs">runs</a></li><li><a href="global.html#selectConfigNameFromDir">selectConfigNameFromDir</a></li><li><a href="global.html#selectTaskFromConfig">selectTaskFromConfig</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#validateProvidedConfigName">validateProvidedConfigName</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="cli.html">cli</a></li><li><a href="runner.html">runner</a></li></ul><h3>Global</h3><ul><li><a href="global.html#currentDirectory">currentDirectory</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Aug 19 2023 03:39:03 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Aug 19 2023 04:12:38 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

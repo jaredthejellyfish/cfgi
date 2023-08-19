@@ -4,6 +4,15 @@ import ora from "ora";
 
 const pink = chalk.hex("#FFC0CB");
 
+/**
+ * @fileOverview Defines all the functions for the cfgi runner.
+ * @author Gerard Hernandez
+ *
+ * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
+ * @requires     {@link https://www.npmjs.com/package/ora | ora}
+ * @requires     {@link https://nodejs.org/api/process.html | process}
+ */
+
 process.on("SIGINT", () => {
   console.log("");
 });
@@ -32,6 +41,7 @@ export type RunError = {
 /**
  * Executes a command synchronously and captures live output.
  * @function commandLive
+ * @memberof runner
  * @param {string} cmd - The command to be executed.
  * @param {boolean} [silent=false] - If true, suppresses output; otherwise, displays live output.
  * @returns {RunOutput} A success message if the command is executed successfully, or nothing if there's an error.
@@ -74,6 +84,7 @@ export function commandLive(cmd: string, silent = false): RunOutput {
 /**
  * Executes a command synchronously using the specified command string.
  * @function command
+ * @memberof runner
  * @param {string} cmd - The command string to be executed.
  * @param {boolean} [silent=true] - Whether to suppress output.
  * @returns {RunOutput} An object containing information about the command execution.
@@ -96,7 +107,8 @@ export function command(cmd: string, silent = true): RunOutput {
  * Represents a run within a task.
  * A run must always have a return statement within its function body.
  * If it does not have one it will be added automatically.
- *
+ * @function runs
+ * @memberof runner
  * @param {string} name - The name of the run.
  * @param {function|RunOutput} runFunction - The function that defines the run's behavior.
  * @returns {RunsReturn} An object representing the run.
@@ -152,7 +164,8 @@ export function runs(
 
 /**
  * Represents a task with a setup function and a list of runs.
- *
+ * @function task
+ * @memberof runner
  * @param {string} name - The name of the task.
  * @param {function} setup - The setup function to be executed before runs.
  * @param {{ name: string, run: function() }} runs - An array of runs, each containing a name and a run function.
@@ -194,7 +207,7 @@ export function task(
   const syncRuns = typedRuns.filter((r) => r.type === "sync");
   const liveRuns = typedRuns.filter((r) => r.type === "live");
 
-  const { successful: successfulSync, errors: errosSync } = runSyncRuns(
+  const { successful: successfulSync, errors: errorsSync } = runSyncRuns(
     syncRuns,
     config?.exclude
   );
@@ -205,7 +218,7 @@ export function task(
   );
 
   const successful = successfulSync.concat(successfulLive);
-  const errors = errosSync.concat(errorsLive);
+  const errors = errorsSync.concat(errorsLive);
 
   const endTime = new Date().getTime();
 

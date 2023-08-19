@@ -14,7 +14,7 @@
     "dev": "tsc -w",
     "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz",
     "patch": "git add . && git commit -m \"Minor patch\"  && git add . && git commit -m \"Bump version: $(pnpm version minor)\"",
-    "jsdoc": "jsdoc -d docs dist/*"
+    "jsdoc": "jsdoc -d docs dist/* --recurse"
   },
   "lib": "dom",
   "keywords": [],

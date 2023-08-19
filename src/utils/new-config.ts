@@ -2,6 +2,15 @@ import inquirer from "inquirer";
 import fs from "fs";
 import chalk from "chalk";
 
+/**
+ * @fileOverview Manages the generation of a new configuration file.
+ * @author Gerard Hernandez
+ *
+ * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
+ * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
+ * @requires     {@link https://www.npmjs.com/package/fs | fs}
+ */
+
 const configRunsTemplate = `runs(\"a passing command\", () => {
       command(\"exit 0\");
     }),
@@ -38,6 +47,7 @@ task(
 /**
  * Generates a new configuration file asynchronously.
  * @function generateNewConfig
+ * @memberof cli
  * @async
  * @param {string} [configName] - The name for the new configuration. If not provided, the user will be prompted for input.
  * @returns {Promise<string>} The name of the generated configuration file.

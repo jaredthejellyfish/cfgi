@@ -1,26 +1,39 @@
-import { TaskConfig } from "cfgi";
 import * as fs from "fs/promises";
 import inquirer from "inquirer";
-import { task, command, runs, commandLive, TaskConfig } from "./cfgi-runner.js";
 import { parse } from "@babel/parser";
 import pkg from "@babel/generator";
 import babel from "@babel/core";
-import { Node } from "@babel/types";
-import chalk from "chalk";
-
 import { createContext, Script } from "vm";
+import chalk from "chalk";
+import { task, command, runs, commandLive, TaskConfig } from "./cfgi-runner.js";
+import { Node } from "@babel/types";
+
 
 const generate = pkg.default;
+
+/**
+ * @fileOverview Manages the running of a configuration file.
+ * @author Gerard Hernandez
+ *
+ * @requires     {@link https://nodejs.org/api/fs.html | fs}
+ * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
+ * @requires     {@link https://www.npmjs.com/package/@babel/parser | @babel/parser}
+ * @requires     {@link https://www.npmjs.com/package/@babel/generator | @babel/generator}
+ * @requires     {@link https://www.npmjs.com/package/@babel/core | @babel/core}
+ * @requires     {@link https://www.npmjs.com/package/vm | vm}
+ * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
+ */
 
 /**
  * Returns the current working directory.
  * @type {string}
  */
-export const currentDirectory = process.cwd();
+const currentDirectory: string = process.cwd();
 
 /**
  * Finds all the configuration files in a directory.
  * @function findConfigFilesInDir
+ * @memberof cli
  * @async
  * @param {string} dir - The directory to search in.
  * @returns {Promise<string>} - The name of the selected configuration file.
@@ -45,6 +58,7 @@ export async function findConfigFilesInDir(dir?: string): Promise<string[]> {
 /**
  * Selects a configuration file from a directory.
  * @function selectConfigNameFromDir
+ * @memberof cli
  * @async
  * @param {string[]} files - The configuration files in the directory.
  * @returns {Promise<string>} - The name of the selected configuration file.
@@ -65,6 +79,7 @@ export async function selectConfigNameFromDir(
 /**
  * Validates the provided configuration name.
  * @function validateProvidedConfigName
+ * @memberof cli
  * @async
  * @param {string} name - The name of the configuration file.
  * @returns {Promise<string | undefined>} - The matched configuration file name.
@@ -91,6 +106,7 @@ export async function validateProvidedConfigName(
 /**
  * Parses the configuration file.
  * @function parseConfig
+ * @memberof cli
  * @async
  * @param {string} configFName - The name of the configuration file.
  * @returns {Promise<options:TaskConfig,imports:Array<string>,tasks:Array<{name:string,node:Node }>>} - The parsed configuration file.
@@ -147,6 +163,7 @@ export async function parseConfig(configFName: string): Promise<{
 /**
  * Selects a task from the configuration file.
  * @function selectTaskFromConfig
+ * @memberof cli
  * @async
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
  * @returns {Promise<Array<{name: string, node: Node}>>} - The selected tasks.
@@ -171,6 +188,7 @@ export async function selectTaskFromConfig(
 /**
  * Generates an individual task file.
  * @function generateIndividualTaskFile
+ * @memberof cli
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -212,6 +230,7 @@ export function generateIndividualTaskFile(
 /**
  * Generates a multi-task file.
  * @function generateMultiTaskFile
+ * @memberof cli
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -251,6 +270,7 @@ export function generateMultiTaskFile(
 /**
  * Runs the provided code in a virtual machine.
  * @function runInVM
+ * @memberof cli
  * @param {string} code - The code to run.
  * @returns {void}
  */

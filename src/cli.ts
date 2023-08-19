@@ -17,6 +17,16 @@ import chalk from "chalk";
 import { Node } from "@babel/types";
 import inquirer from "inquirer";
 
+/**
+ * @fileOverview The main CLI program.
+ * @author Gerard Hernandez
+ * @namespace cli
+ *
+ * @requires     {@link https://www.npmjs.com/package/commander | commander}
+ * @requires     {@link https://www.npmjs.com/package/chalk | chalk}
+ * @requires     {@link https://www.npmjs.com/package/inquirer | inquirer}
+ */
+
 const program = new Command();
 
 program
