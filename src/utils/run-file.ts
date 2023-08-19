@@ -22,22 +22,26 @@ export const currentDirectory = process.cwd();
  * @param {string} dir - The directory to search in.
  * @returns {Promise<string>} - The name of the selected configuration file.
  */
-export async function findConfigFilesInDir(dir?: string): Promise<string> {
+export async function findConfigFilesInDir(dir?: string): Promise<string[]> {
   const configPath = dir || currentDirectory;
 
   const files = await fs.readdir(configPath);
 
   const configFiles = files.filter(
-    (file) => file.endsWith(".cfgi.js") || file.endsWith(".cfgi.ts")
+    (file) => file.endsWith(".cfgi.js") || file.endsWith(".cfgi.ts") || file.endsWith(".mjs")
   );
 
   const availableFiles = configFiles.sort((a, b) => a.localeCompare(b));
 
+  return availableFiles;
+}
+
+export async function selectConfigNameFromDir(files: string[]): Promise<string> {
   const response = await inquirer.prompt({
     type: "list",
     name: "config",
     message: "Which config file would you like to run?",
-    choices: availableFiles,
+    choices: files,
   });
 
   return response.config;
@@ -56,7 +60,7 @@ export async function validateProvidedConfigName(
   const files = await fs.readdir(currentDirectory);
 
   const configFiles = files.filter(
-    (file) => file.endsWith(".cfgi.js") || file.endsWith(".cfgi.ts")
+    (file) => file.endsWith(".cfgi.js") || file.endsWith(".cfgi.ts") || file.endsWith(".mjs")
   );
 
   const matchedFile = configFiles.find((file) => file.includes(name));
@@ -238,6 +242,5 @@ export function runInVM(code: string) {
   } catch (e) {
     console.log(chalk.red("✖ Something went wrong!"));
     console.log(e);
-    process.exit(1);
   }
 }

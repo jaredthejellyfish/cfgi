@@ -23,7 +23,7 @@ const configTemplate = (
   command,
   runs,
   commandLive,
-} from "./dist/functions/cfgi-runner.js";
+} from "cfgi";
 ${includeOptions ? configOptionsTemplate : ""}
 task(
   "${name}",
@@ -42,7 +42,7 @@ task(
  * @returns {Promise<string>} The name of the generated configuration file.
  */
 export async function generateNewConfig(
-  configName: string,
+  configName?: string,
   includeSample: boolean = false,
   includeOptions: boolean = false
 ) {
@@ -77,13 +77,12 @@ export async function generateNewConfig(
       )}.\n`
     );
 
-
   /**
    * The filename for the generated configuration file.
    * @type {string}
    */
   const configFileName =
-    configNamePrompted.replace(/ /g, "-").toLowerCase() + ".cfgi.js";
+    configNamePrompted.replace(/ /g, "-").toLowerCase() + ".cfgi.mjs";
 
   // Current working directory
   const cwd = process.cwd();

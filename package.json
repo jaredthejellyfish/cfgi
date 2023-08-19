@@ -1,6 +1,6 @@
 {
   "name": "cfgi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -12,35 +12,27 @@
     "link-cli": "yarn --global unlink || yarn --global link",
     "unlink-cli": "yarn --global unlink",
     "dev": "tsc -w",
-    "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.1.tgz"
+    "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz"
   },
   "lib": "dom",
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@babel/generator": "^7.22.10",
-    "@types/babel__core": "^7.20.1",
-    "@types/babel__generator": "^7.6.4",
-    "@types/esprima": "^4.0.3",
-    "@types/inquirer": "^9.0.3",
-    "@types/node": "^20.5.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
-  },
   "dependencies": {
     "@babel/core": "^7.22.10",
+    "@babel/generator": "^7.22.10",
     "@babel/parser": "^7.22.10",
     "@babel/preset-env": "^7.22.10",
     "@babel/types": "^7.22.10",
+    "@types/babel__core": "^7.20.1",
+    "@types/babel__generator": "^7.6.4",
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^20.5.0",
+    "cfgi": "file:/Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz",
     "chalk": "^5.3.0",
-    "chalk-animation": "^2.0.3",
     "commander": "^11.0.0",
-    "esprima": "^4.0.1",
-    "figlet": "^1.6.0",
-    "gradient-string": "^2.0.2",
     "inquirer": "^9.2.10",
-    "nanospinner": "^1.1.0",
-    "ora": "^7.0.1"
+    "ora": "^7.0.1",
+    "typescript": "^5.1.6"
   }
 }

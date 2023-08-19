@@ -9,11 +9,13 @@ import {
   parseConfig,
   selectTaskFromConfig,
   generateMultiTaskFile,
+  selectConfigNameFromDir,
   runInVM,
 } from "./utils/run-file.js";
 
 import chalk from "chalk";
 import { Node } from "@babel/types";
+import inquirer from "inquirer";
 
 const program = new Command();
 
@@ -25,9 +27,28 @@ program
   .version("0.0.0")
   .action(async (name, args) => {
     const sanitizedConfigName = await validateProvidedConfigName(name);
-    const configName = sanitizedConfigName
-      ? sanitizedConfigName
-      : await findConfigFilesInDir();
+    const configFilesInDir = await findConfigFilesInDir();
+
+    let configName: string;
+    if (sanitizedConfigName) {
+      configName = sanitizedConfigName;
+    } else if (configFilesInDir.length > 1) {
+      configName = await selectConfigNameFromDir(configFilesInDir);
+    } else if (configFilesInDir.length === 1) {
+      configName = configFilesInDir[0]!;
+    } else {
+      console.log(chalk.red("✖ No config files found!"));
+      const { create } = await inquirer.prompt({
+        type: "confirm",
+        name: "create",
+        message: "Would you like to create a new config file?",
+      });
+
+      if (create) {
+        await generateNewConfig(undefined, true, true);
+        process.exit(0);
+      }
+    }
 
     console.log(
       chalk.yellow(
@@ -35,7 +56,7 @@ program
       )
     );
 
-    const { options, imports, tasks } = await parseConfig(configName);
+    const { options, imports, tasks } = await parseConfig(configName!);
 
     if (!tasks.length) {
       console.log(chalk.red("✖ No tasks found!"));
@@ -65,7 +86,7 @@ program
     "-eo, --example-options",
     "Add an example and options object to the generated run file."
   )
-  .action((name, options) => {
+  .action((name: string, options) => {
     console.log(
       chalk.yellow(
         `ℹ Starting generator for config${
