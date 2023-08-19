@@ -13,7 +13,7 @@
     "unlink-cli": "yarn --global unlink",
     "dev": "tsc -w",
     "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz",
-    "publish": "tsc && git add . && git commit -m 'build' && git push && pnpm publish"
+    "patch": "git add . && git commit -m \"Bump version: $(pnpm version minor)\" && git push"
   },
   "lib": "dom",
   "keywords": [],
