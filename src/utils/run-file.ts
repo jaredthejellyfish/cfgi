@@ -229,8 +229,8 @@ export function generateIndividualTaskFile(
 
 /**
  * Generates a multi-task file.
- * @memberof cli
  * @function generateMultiTaskFile
+ * @memberof cli
  * @param {TaskConfig} options - The task configuration options.
  * @param {string[]} imports - The imports in the configuration file.
  * @param {Array<{name: string, node: Node}>} tasks - The tasks in the configuration file.
@@ -269,8 +269,8 @@ export function generateMultiTaskFile(
 
 /**
  * Runs the provided code in a virtual machine.
- * @memberof cli
  * @function runInVM
+ * @memberof cli
  * @param {string} code - The code to run.
  * @returns {void}
  */

@@ -40,7 +40,7 @@ export type RunError = {
 
 /**
  * Executes a command synchronously and captures live output.
- * @memberof runner
+ * @memberof cfgi
  * @function commandLive
  * @param {string} cmd - The command to be executed.
  * @param {boolean} [silent=false] - If true, suppresses output; otherwise, displays live output.
@@ -83,7 +83,7 @@ export function commandLive(cmd: string, silent = false): RunOutput {
 
 /**
  * Executes a command synchronously using the specified command string.
- * @memberof runner
+ * @memberof cfgi
  * @function command
  * @param {string} cmd - The command string to be executed.
  * @param {boolean} [silent=true] - Whether to suppress output.
@@ -107,7 +107,7 @@ export function command(cmd: string, silent = true): RunOutput {
  * Represents a run within a task.
  * A run must always have a return statement within its function body.
  * If it does not have one it will be added automatically.
- * @memberof runner
+ * @memberof cfgi
  * @function runs
  * @param {string} name - The name of the run.
  * @param {function|RunOutput} runFunction - The function that defines the run's behavior.
@@ -164,7 +164,7 @@ export function runs(
 
 /**
  * Represents a task with a setup function and a list of runs.
- * @memberof runner
+ * @memberof cfgi
  * @function task
  * @param {string} name - The name of the task.
  * @param {function} setup - The setup function to be executed before runs.
