@@ -5,3 +5,4 @@ dist/
 *.cfgi.ts
 test*
 .DS*
+.vscode

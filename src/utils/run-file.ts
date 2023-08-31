@@ -1,4 +1,5 @@
 import * as fs from "fs/promises";
+import * as path from "path";
 import inquirer from "inquirer";
 import { parse } from "@babel/parser";
 import pkg from "@babel/generator";
@@ -34,24 +35,33 @@ const generate = pkg.default;
 
 const currentDirectory: string = process.cwd();
 
-/**
- * Finds all the configuration files in a directory.
- * @function
- * @async
- * @param {string} dir - The directory to search in.
- * @returns {Promise<string>} - The name of the selected configuration file.
- */
 export async function findConfigFilesInDir(dir?: string): Promise<string[]> {
-  const configPath = dir || currentDirectory;
+  const configPath = dir || process.cwd();
 
   const files = await fs.readdir(configPath);
 
-  const configFiles = files.filter(
-    (file) =>
-      file.endsWith(".cfgi.js") ||
-      file.endsWith(".cfgi.ts") ||
-      file.endsWith(".mjs")
-  );
+  let cfgiDir = files.find((file) => file === "cfgi");
+
+  let configFiles: string[] = [];
+
+  if (cfgiDir) {
+    const cfgiFiles = await fs.readdir(path.join(configPath, cfgiDir));
+    configFiles = cfgiFiles
+      .filter(
+        (file) =>
+          file.endsWith(".cfgi.js") ||
+          file.endsWith(".cfgi.ts") ||
+          file.endsWith(".mjs")
+      )
+      .map((file) => path.join(cfgiDir!, file)); // prepend the directory name
+  } else {
+    configFiles = files.filter(
+      (file) =>
+        file.endsWith(".cfgi.js") ||
+        file.endsWith(".cfgi.ts") ||
+        file.endsWith(".mjs")
+    );
+  }
 
   const availableFiles = configFiles.sort((a, b) => a.localeCompare(b));
 
