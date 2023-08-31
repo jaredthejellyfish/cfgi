@@ -11,7 +11,6 @@
   "scripts": {
     "link-cli": "(yarn --global unlink || true) && chmod +x dist/cli.js && yarn --global link",
     "unlink-cli": "yarn --global unlink",
-    "dev": "tsc -w",
     "update": "pnpm pack && pnpm install /Users/gerardhernandez/code/cfgi/cfgi-0.0.2.tgz",
     "build": "rm -rf docs/ ; rm -rf dist/ && tsc ; chmod +x dist/cli.js ; jsdoc -d docs dist/* --recurse -p",
     "jsdoc": "rm -rf docs/ && jsdoc -d docs dist/* --recurse -p"
